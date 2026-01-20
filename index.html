@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Premium Couple Quiz 💖</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:url("https://img.sanishtech.com/u/52e57f40d2c3fa5d3ab5a7a6a4f51ebc.jpg")
+  center/cover no-repeat;
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.card{
+  background: rgba(0,0,0,0.7);
+  color:white;
+  padding:25px;
+  border-radius:20px;
+  width:90%;
+  max-width:400px;
+  text-align:center;
+  box-shadow:0 0 25px pink;
+  animation:fade .5s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:scale(.9)}
+  to{opacity:1;transform:scale(1)}
+}
+
+h1{color:#ff69b4}
+
+input{
+  width:80%;
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  margin:10px 0;
+  text-align:center;
+}
+
+button{
+  padding:12px 25px;
+  margin:10px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.start{background:#ff69b4;color:white}
+.yes{background:#00ff99;color:black}
+.no{background:#ff4d4d;color:white}
+
+.hidden{display:none}
+
+img{
+  width:200px;
+  border-radius:15px;
+  margin-top:15px;
+}
+
+/* CONFETTI */
+.confetti{
+  position:fixed;
+  width:8px;
+  height:14px;
+  top:-20px;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC (manual play) -->
+<audio id="music">
+  <source src="https://s31.aconvert.com/convert/p3r68-cdx67/z2g1z-dji57.mp3">
+</audio>
+
+<!-- PASSWORD -->
+<div class="card" id="passBox">
+  <h1>🔒 Premium Access</h1>
+  <input type="password" id="pass" placeholder="Password">
+  <br>
+  <button class="start" onclick="checkPass()">Unlock 💖</button>
+</div>
+
+<!-- NAME -->
+<div class="card hidden" id="nameBox">
+  <h1>Your Name 💌</h1>
+  <input type="text" id="username" placeholder="Enter name">
+  <br>
+  <button class="start" onclick="startQuiz()">Start Quiz ✨</button>
+</div>
+
+<!-- QUIZ -->
+<div class="card hidden" id="quizBox">
+  <h1 id="welcome"></h1>
+  <p id="question"></p>
+  <button class="yes" onclick="answer('YES')">YES 💕</button>
+  <button class="no" onclick="answer('NO')">NO 💔</button>
+</div>
+
+<!-- FINISH -->
+<div class="card hidden" id="finishBox">
+  <h1>🎉 Completed 🎉</h1>
+  <p>You unlocked my heart 💖</p>
+  <img src="https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyN2VuNDl4aDgycXNwNmNkY3B1eHFhaGZsb3RreGIydGFiNnEwcnVraiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RB46T9ysjzDEs/giphy.gif">
+  <h2>💖 💕 💞 💝</h2>
+</div>
+
+<script>
+/* PASSWORD */
+const PASSWORD="pagal";
+
+function checkPass(){
+  if(pass.value===PASSWORD){
+    passBox.classList.add("hidden");
+    nameBox.classList.remove("hidden");
+    document.getElementById("music").play();
+  } else alert("Wrong password 😜");
+}
+
+/* QUESTIONS */
+const questions=[
+  "Do you love me?",
+  "Do you miss me?",
+  "Will you stay forever with me?",
+  "Do you trust me?",
+  "Will u be my valentine?"
+];
+
+let i=0;
+
+function startQuiz(){
+  const name=username.value || "Love";
+  welcome.innerText="Hi "+name+" 💖";
+  nameBox.classList.add("hidden");
+  quizBox.classList.remove("hidden");
+  loadQ();
+}
+
+function loadQ(){
+  question.innerText=questions[i];
+}
+
+function answer(a){
+  alert("Answer: "+a);
+  i++;
+  if(i<questions.length){
+    loadQ();
+  }else{
+    quizBox.classList.add("hidden");
+    finishBox.classList.remove("hidden");
+    confetti();
+  }
+}
+
+/* CONFETTI */
+function confetti(){
+  for(let j=0;j<100;j++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    c.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5000);
+  }
+}
+</script>
+
+</body>
+</html>
